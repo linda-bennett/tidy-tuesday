@@ -3,6 +3,7 @@ library(ggtext)
 library(patchwork)
 library(cowplot)
 library(ggridges)
+library(extrafont)
 
 tuesdata <- tidytuesdayR::tt_load(2021, week = 14)
 
@@ -54,7 +55,7 @@ create_color_circle <- function(.data, brand_filter, chart_label){
     ylim(c(-1.5, 1.5)) +
     geom_text(x = 132,
               y = -1.5,
-              size = 3,
+              size = 4,
               family = "Verdana",
               label = chart_label) +
     coord_polar() +
@@ -85,5 +86,9 @@ lightdark_header <- ggdraw() +
   draw_text("Here are some examples of the shade variety for brands that use a light to dark ordering:", 
             x = .5, y = 0.1, size = 12, family = "Verdana Pro Light")
 
+footer <- ggdraw() +
+  draw_text("Source: The Pudding | #TidyTuesday",
+            size = 8, x = 0.5)
 
-final_plot <- header / density_plot / darklight_header / (exa | jp | pac | bb) / lightdark_header /(cq | bm | itc | tarte) + plot_layout(heights = c(0.4, 0.6, 0.1, 0.4, 0.1, 0.4))
+
+final_plot <- header / density_plot / darklight_header / (exa | jp | pac | bb) / lightdark_header /(cq | bm | itc | tarte) / footer + plot_layout(heights = c(0.4, 0.6, 0.1, 0.4, 0.1, 0.4, 0.05))
